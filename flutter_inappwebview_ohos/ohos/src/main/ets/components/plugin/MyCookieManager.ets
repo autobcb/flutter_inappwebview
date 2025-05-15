@@ -126,19 +126,24 @@ export default class MyCookieManager extends ChannelDelegateImpl {
 
     if(web_webview.WebCookieManager.fetchCookieSync(url) == "") return cookieListMap
 
-
-
-    /// Android中同样只获取了setCookies中“name=value”这一段，因此目前先这样写着
     let cookies: string[] = web_webview.WebCookieManager.fetchCookieSync(url).split(";")
-     console.info('getCookies cookies',cookies.toString())
-      console.info('getCookies cookies2',web_webview.WebCookieManager.fetchCookieSync(url))
+    console.info('getCookies cookies', cookies.toString())
+    
     for(let cookie of cookies) {
-      let cookieParams: string[] = cookie.split(",");
-      if (cookieParams.length == 0) continue;
-
-
-      let nameValue: string[] = cookieParams[0].split("=", 2);
+      let nameValue: string[] = cookie.split("=", 2);
       let name: string = nameValue[0].trim();
+      
+      // 跳过属性名
+      if (name.toLowerCase() === "path" || 
+          name.toLowerCase() === "domain" || 
+          name.toLowerCase() === "expires" || 
+          name.toLowerCase() === "max-age" || 
+          name.toLowerCase() === "secure" || 
+          name.toLowerCase() === "httponly" || 
+          name.toLowerCase() === "samesite") {
+        continue;
+      }
+
       let value: string = (nameValue.length > 1) ? nameValue[1].trim() : "";
 
       let cookieMap: Map<string, Any> = new Map<string, Any>()
@@ -151,47 +156,6 @@ export default class MyCookieManager extends ChannelDelegateImpl {
       cookieMap.set("isSecure", null);
       cookieMap.set("isHttpOnly", null);
       cookieMap.set("path", null);
-
-      if(web_webview.WebCookieManager.isCookieAllowed()) {
-        cookieMap.set("isSecure", false);
-        cookieMap.set("isHttpOnly", false);
-
-        for (let i = 1; i < cookieParams.length; i++) {
-          let cookieParamNameValue: string[] = cookieParams[i].split("=", 2);
-          let cookieParamName: string = cookieParamNameValue[0].trim();
-          let cookieParamValue: string = (cookieParamNameValue.length > 1) ? cookieParamNameValue[1].trim() : "";
-
-          if (cookieParamName.localeCompare("Expires", undefined, { sensitivity: 'accent' }) == 0) {
-            try{
-              let dateFormat = new Intl.DateTimeFormat("en-US", {weekday: 'short', day: '2-digit',
-                month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'GMT'})
-              let expiryDate: Date = new Date(dateFormat.format(new Date(cookieParamValue)))
-              if(expiryDate != null) {
-                cookieMap.set("expiresDate", expiryDate.getTime());
-              }
-            } catch (e) {
-              console.error(LOG_TAG, "", e);
-            }
-          } else if (cookieParamName.localeCompare("Max-Age", undefined, { sensitivity: 'accent' }) == 0) {
-            try {
-              let maxAge: number = Number(cookieParamValue);
-              cookieMap.set("expiresDate", await systemDateTime.getCurrentTime(false) + maxAge)
-            } catch (e) {
-              console.error(LOG_TAG, "", e)
-            }
-          } else if (cookieParamName.localeCompare("Domain", undefined, { sensitivity: 'accent' }) == 0) {
-            cookieMap.set("domain", cookieParamValue)
-          } else if (cookieParamName.localeCompare("SameSite", undefined, { sensitivity: 'accent' }) == 0) {
-            cookieMap.set("sameSite", cookieParamValue)
-          } else if (cookieParamName.localeCompare("Secure", undefined, { sensitivity: 'accent' }) == 0) {
-            cookieMap.set("isSecure", true)
-          } else if (cookieParamName.localeCompare("HttpOnly", undefined, { sensitivity: 'accent' }) == 0) {
-            cookieMap.set("isHttpOnly", true)
-          } else if (cookieParamName.localeCompare("Path", undefined, { sensitivity: 'accent' }) == 0) {
-            cookieMap.set("path", cookieParamValue)
-          }
-        }
-      }
 
       cookieListMap.add(cookieMap)
     }
