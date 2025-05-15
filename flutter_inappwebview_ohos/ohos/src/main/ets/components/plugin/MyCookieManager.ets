@@ -132,14 +132,14 @@ export default class MyCookieManager extends ChannelDelegateImpl {
     for(let cookie of cookies) {
       let cookieParams: string[] = cookie.split(";");
       if (cookieParams.length == 0) continue;
-      console.log(LOG_TAG, cookie);
+
 
       let nameValue: string[] = cookieParams[0].split("=", 2);
       let name: string = nameValue[0].trim();
       let value: string = (nameValue.length > 1) ? nameValue[1].trim() : "";
 
       let cookieMap: Map<string, Any> = new Map<string, Any>()
-      cookieMap.set("name", name);
+      cookieMap.set("name", cookie);
       cookieMap.set("value", value);
       cookieMap.set("expiresDate", null);
       cookieMap.set("isSessionOnly", null);
