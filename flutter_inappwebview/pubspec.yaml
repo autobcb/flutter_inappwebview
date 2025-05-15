@@ -36,7 +36,7 @@ dependencies:
       path: "flutter_inappwebview_macos"
   flutter_inappwebview_web:
     git:
-      url: "https://gitcode.com/openharmony-sig/flutter_inappwebview.git"
+      url: "https://github.com/autobcb/flutter_inappwebview.git"
       path: "flutter_inappwebview_web"
   flutter_inappwebview_ohos:
     git:
