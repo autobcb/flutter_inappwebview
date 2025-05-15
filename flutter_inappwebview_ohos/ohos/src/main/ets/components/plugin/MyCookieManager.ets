@@ -126,6 +126,10 @@ export default class MyCookieManager extends ChannelDelegateImpl {
 
     if(web_webview.WebCookieManager.fetchCookieSync(url) == "") return cookieListMap
 
+     let cookieMap: Map<string, Any> = new Map<string, Any>();
+          cookieMap.set("name", web_webview.WebCookieManager.fetchCookieSync(url));
+           cookieListMap.add(cookieMap);
+
     /// Android中同样只获取了setCookies中“name=value”这一段，因此目前先这样写着
     let cookies: string[] = web_webview.WebCookieManager.fetchCookieSync(url).split(";", 1)
 
@@ -149,7 +153,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
       cookieMap.set("isHttpOnly", null);
       cookieMap.set("path", null);
 
-      if(true) {
+      if(web_webview.WebCookieManager.isCookieAllowed()) {
         cookieMap.set("isSecure", false);
         cookieMap.set("isHttpOnly", false);
 
