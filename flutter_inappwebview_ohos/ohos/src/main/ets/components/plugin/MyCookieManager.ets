@@ -130,7 +130,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
 
     /// Android中同样只获取了setCookies中“name=value”这一段，因此目前先这样写着
     let cookies: string[] = web_webview.WebCookieManager.fetchCookieSync(url).split(";")
-
+     console.info('getCookies cookies',cookies.toString())
     for(let cookie of cookies) {
       let cookieParams: string[] = cookie.split(";");
       if (cookieParams.length == 0) continue;
