@@ -139,7 +139,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
       let value: string = (nameValue.length > 1) ? nameValue[1].trim() : "";
 
       let cookieMap: Map<string, Any> = new Map<string, Any>()
-      cookieMap.set("name", cookie);
+      cookieMap.set("name", name);
       cookieMap.set("value", value);
       cookieMap.set("expiresDate", null);
       cookieMap.set("isSessionOnly", null);
@@ -149,7 +149,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
       cookieMap.set("isHttpOnly", null);
       cookieMap.set("path", null);
 
-      if(web_webview.WebCookieManager.isCookieAllowed()) {
+      if(true) {
         cookieMap.set("isSecure", false);
         cookieMap.set("isHttpOnly", false);
 
