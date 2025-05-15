@@ -132,7 +132,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
     for(let cookie of cookies) {
       let cookieParams: string[] = cookie.split(";");
       if (cookieParams.length == 0) continue;
-
+      console.log(LOG_TAG, cookie);
 
       let nameValue: string[] = cookieParams[0].split("=", 2);
       let name: string = nameValue[0].trim();
@@ -143,7 +143,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
       cookieMap.set("value", value);
       cookieMap.set("expiresDate", null);
       cookieMap.set("isSessionOnly", null);
-      cookieMap.set("domain", cookie);
+      cookieMap.set("domain", null);
       cookieMap.set("sameSite", null);
       cookieMap.set("isSecure", null);
       cookieMap.set("isHttpOnly", null);
