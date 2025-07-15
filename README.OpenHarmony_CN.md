@@ -22,7 +22,7 @@
 dependencies:
   flutter_inappwebview:
     git:
-      url: "https://gitcode.com/openharmony-sig/flutter_inappwebview.git"
+      url: "https://github.com/autobcb/flutter_inappwebview.git"
       path: "flutter_inappwebview"  
 
 ...

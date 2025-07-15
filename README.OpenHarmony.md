@@ -22,7 +22,7 @@ Go to the project directory and add the following dependencies in pubspec.yaml
 dependencies:
   flutter_inappwebview:
     git:
-      url: "https://gitcode.com/openharmony-sig/flutter_inappwebview.git"
+      url: "https://github.com/autobcb/flutter_inappwebview.git"
       path: "flutter_inappwebview"
 
 ...
