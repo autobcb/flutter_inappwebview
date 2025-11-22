@@ -47,7 +47,7 @@ class WebResourceResponse {
       return null;
     }
     final instance = WebResourceResponse(
-      data: map['data'],
+      data: map['data'] is Uint8List ?map['data'] :null,
       headers: map['headers']?.cast<String, String>(),
       reasonPhrase: map['reasonPhrase'],
       statusCode: map['statusCode'],

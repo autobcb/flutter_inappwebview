@@ -22,7 +22,7 @@ class WebResourceError {
     }
     final instance = WebResourceError(
       description: map['description'],
-      type: WebResourceErrorType.fromNativeValue(map['type'])!,
+      type: WebResourceErrorType.fromNativeValue(map['type'])??WebResourceErrorType.BAD_URL,
     );
     return instance;
   }

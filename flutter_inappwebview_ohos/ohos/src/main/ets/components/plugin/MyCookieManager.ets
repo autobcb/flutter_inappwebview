@@ -51,6 +51,7 @@ export default class MyCookieManager extends ChannelDelegateImpl {
           let isSecure: boolean = call.argument("isSecure") as boolean;
           let isHttpOnly: boolean = call.argument("isHttpOnly") as boolean;
           let sameSite: string = call.argument("sameSite") as string;
+          console.log(LOG_TAG+"setCookie :" +url);
           this.setCookie(url,
                   name,
                   value,
